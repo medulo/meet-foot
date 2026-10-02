@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block titre %}Le Market — Meet Foot{% endblock %}
+{% block contenu %}
+    <div class="page-en-tete">
+        <h1 class="mb-0">Le Market</h1>
+        {% if peut_publier %}
+            <a href="{{ url_for('market.market_publier') }}" class="bouton bouton-accent">{{ icon("plus-circle", 16) }} Publier</a>
+        {% endif %}
+    </div>
+
+    {% if annonces|length == 0 %}
+        <div class="etat-vide">
+            {{ icon("shopping-bag", 40) }}
+            <p>Aucune annonce pour le moment.</p>
+        </div>
+    {% endif %}
+
+    {% for annonce in annonces %}
+        <article class="carte carte-compacte">
+            <a href="{{ url_for('profile.visiter_profil', email_visite=annonce.auteur_email) }}" class="entete-auteur" style="margin-bottom:10px;">
+                {% if annonce.logo_url %}
+                    <img class="avatar avatar-petit" src="{{ annonce.logo_url }}" alt="">
+                {% else %}
+                    <div class="avatar avatar-petit">{{ annonce.auteur_nom[0]|upper }}</div>
+                {% endif %}
+                <span class="entete-auteur-nom">{{ annonce.auteur_nom }}</span>
+                <span class="badge badge-neutre">{{ "Club" if annonce.type_annonce == "joueur" else "Agent / Coach" }}</span>
+            </a>
+
+            {% if annonce.type_annonce == "joueur" %}
+                <div style="display:flex; gap:12px;">
+                    {% if annonce.photo_url %}
+                        <img src="{{ url_for('static', filename='uploads/' + annonce.photo_url) }}" class="avatar-grand" style="border-radius:var(--rayon); object-fit:cover;" alt="">
+                    {% endif %}
+                    <div>
+                        <div style="font-weight:700; font-size:16px;">{{ annonce.nom_joueur }}</div>
+                        <div class="texte-attenue texte-petit">{{ annonce.poste }} · {{ annonce.age }} ans</div>
+                        {% if annonce.prix %}
+                            <div class="badge badge-accent" style="margin-top:6px;">{{ annonce.prix }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div style="display:flex; gap:8px; margin-top:12px;">
+                    <a href="{{ url_for('messaging.conversation', autre_email=annonce.auteur_email) }}" class="bouton bouton-primaire" style="flex:1;">Acheter</a>
+                    <a href="{{ url_for('messaging.conversation', autre_email=annonce.auteur_email) }}" class="bouton bouton-secondaire" style="flex:1;">Négocier</a>
+                </div>
+            {% else %}
+                <div style="display:flex; gap:12px; align-items:center;">
+                    {% if annonce.photo_url %}
+                        <img src="{{ url_for('static', filename='uploads/' + annonce.photo_url) }}" class="avatar-grand" alt="">
+                    {% endif %}
+                    <p class="mb-0">{{ annonce.description }}</p>
+                </div>
+                
