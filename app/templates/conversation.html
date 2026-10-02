@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block titre %}{{ autre_nom }} — Meet Foot{% endblock %}
+{% block contenu %}
+    <a href="{{ url_for('messaging.messagerie') }}" class="bouton bouton-texte mb-0" style="padding-left:0;">{{ icon("arrow-left", 16) }} Conversations</a>
+
+    <a href="{{ url_for('profile.visiter_profil', email_visite=autre_email) }}" class="entete-auteur mt-lg" style="margin-bottom:16px;">
+        <div class="avatar">{{ autre_nom[0]|upper }}</div>
+        <div class="entete-auteur-infos">
+            <span class="entete-auteur-nom" style="font-size:16px;">{{ autre_nom }}</span>
+            <span class="entete-auteur-meta">{{ "Club" if type_autre == "club" else "Particulier" }}</span>
+        
