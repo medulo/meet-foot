@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block titre %}Paramètres — Meet Foot{% endblock %}
+{% block contenu %}
+    <a href="{{ url_for('profile.profil') }}" class="bouton bouton-texte mb-0" style="padding-left:0;">{{ icon("arrow-left", 16) }} Profil</a>
+    <h1 class="mt-lg">Paramètres</h1>
+
+    <a href="{{ url_for('profile.modifier_profil') }}" class="lien-parametre">
+        {{ icon("edit") }} Changer mes infos personnelles
+        <span class="lien-parametre-fleche">{{ icon("chevron-right", 16) }}</span>
+    </a>
+    <a href="{{ url_for('profile.langue') }}" class="lien-parametre">
+        {{ icon("globe") }} Changer la langue de l'appli
+        <span class="lien-parametre-fleche">{{ icon("chevron-right", 16) }}</span>
+    </a>
+    <a href="{{ url_for('profile.abonnement') }}" class="lien-parametre">
+        {{ icon("credit-card") }} Abonnement
+        <span class="lien-parametre-fleche">{{ icon("chevron-right", 16) }}</span>
+    </a>
+    <a href="{{ url_for('auth.logout') }}" class="lien-parametre danger">
+        {{ icon("log-out") }} Se déconnecter
+    </a>
+{% endblock %}
