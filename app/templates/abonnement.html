@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block titre %}Abonnement — Meet Foot{% endblock %}
+{% block contenu %}
+    {% if abonnement_ok %}
+        <a href="{{ url_for('profile.parametres') }}" class="bouton bouton-texte mb-0" style="padding-left:0;">{{ icon("arrow-left", 16) }} Paramètres</a>
+    {% endif %}
+
+    <div class="carte carte-auth mt-lg" style="margin-left:auto; margin-right:auto;">
+        <div class="marque-icone" style="width:48px; height:48px; border-radius:13px; margin:0 auto 12px auto;">
+            {{ icon("credit-card", 24) }}
+        </div>
+        <h1 class="texte-centre">Abonnement Meet Foot</h1>
+        <p class="texte-attenue texte-centre">
+            L'application est payante : <strong>{{ prix }}Fr / mois</strong> pour ton type de compte.
+        </p>
+
+        {% if actif %}
+            <div class="alerte alerte-succes">
+                {{ icon("check-circle") }}
+                <span>Ton abonnement est actif, payé via <strong>{{ moyen_actuel }}</strong>.</span>
+            </div>
+            <form method="POST">
+                <input type="hidden" name="action" value="resilier">
+                <button type="submit" class="bouton bouton-danger bouton-bloc">Résilier mon abonnement</button>
+            </form>
+        {% else %}
+            <div class="alerte alerte-danger">
+                {{ icon("alert-circle") }}
+                <span>Ton abonnement n'est pas à jour. Choisis un moyen de paiement pour continuer.</span>
+            </div>
+            <form method="POST">
+                <div class="champ">
+                    <label>Moyen de paiement</label>
+                    <select name="moyen_paiement" required>
+                        {% for moyen in moyens %}
+                            <option value="{{ moyen }}">{{ moyen }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="bouton bouton-primaire bouton-bloc">Payer {{ prix }}Fr et activer mon compte</button>
+            </form>
+            <p class="texte-centre mt-lg"><a href="{{ url_for('auth.logout') }}" class="bouton bouton-texte">Se déconnecter</a></p>
+        {% endif %}
+
+        <p class="texte-petit texte-attenue mt-lg">
+            Version de démonstration : le paiement est simulé (pas de connexion internet dans cet environnement de test).
+            Pour un vrai lancement, il faudra brancher l'API du fournisseur choisi (Wave, MTN MoMo, Moov Money…)
+            dans la fonction <code>activer_abonnement()</code> de <code>app/database.py</code>.
+        </p>
+    </div>
+{% endblock %}
