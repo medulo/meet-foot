@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block titre %}Connexion — Meet Foot{% endblock %}
+{% block contenu %}
+<div class="page-centree">
+    <div class="carte carte-auth">
+        <h1>Connexion</h1>
+        <p class="texte-attenue">Content de te revoir.</p>
+
+        {% if erreur %}
+            <div class="alerte alerte-danger">{{ icon("alert-circle") }}<span>{{ erreur }}</span></div>
+        {% endif %}
+
+        <form method="POST">
+            <div class="champ">
+                <label>Email</label>
+                <input type="email" name="email" required autofocus>
+            </div>
+            <div class="champ">
+                <label>Mot de passe</label>
+                <input type="password" name="mot_de_passe" required>
+            </div>
+            <button type="submit" class="bouton bouton-primaire bouton-bloc">Se connecter</button>
+        </form>
+
+        <p class="texte-centre texte-petit mt-lg">
+            Pas encore de compte ?
+            <a href="{{ url_for('auth.index') }}" class="bouton bouton-texte" style="padding:0;">S'inscrire</a>
+        </p>
+    </div>
+</div>
+{% endblock %}
