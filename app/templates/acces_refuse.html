@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block titre %}Accès non autorisé — Meet Foot{% endblock %}
+{% block contenu %}
+    <div class="etat-vide">
+        {{ icon("lock", 40) }}
+        <h1>Accès non autorisé</h1>
+        <p>
+            En tant que Compte particulier, tu ne peux pas visiter le profil
+            d'un autre Compte particulier ({{ nom }}). Tu peux uniquement
+            visiter les profils des Comptes Club.
+        </p>
+        <a href="{{ url_for('feed.accueil') }}" class="bouton bouton-primaire">{{ icon("arrow-left", 16) }} Retour à l'accueil</a>
+    </div>
+{% endblock %}
