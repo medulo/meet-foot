@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block titre %}Accueil — Meet Foot{% endblock %}
+{% block contenu %}
+    <div class="page-en-tete">
+        <h1 class="mb-0">Accueil</h1>
+        <a href="{{ url_for('feed.creer') }}" class="bouton bouton-accent">{{ icon("plus-circle", 16) }} Publier</a>
+    </div>
+
+    {% if posts|length == 0 %}
+        <div class="etat-vide">
+            {{ icon("inbox", 40) }}
+            <p>Aucune publication pour le moment.</p>
+            <a href="{{ url_for('feed.creer') }}" class="bouton bouton-primaire">Faire la première publication</a>
+        </div>
+    {% endif %}
+
+    {% for post in posts %}
+        <article class="carte carte-compacte">
+            <div class="flex-entre">
+                <a href="{{ url_for('profile.visiter_profil', email_visite=post.auteur_email) }}" class="entete-auteur">
+                    <div class="avatar avatar-petit">{{ post.auteur_nom[0]|upper }}</div>
+                    <div class="entete-auteur-infos">
+                        <span class="entete-auteur-nom">{{ post.auteur_nom }}</span>
+                        <span class="entete-auteur-meta">
+                            {{ "Club" if post.auteur_type == "club" else "Particulier" }} · {{ post.date_publication }}
+                        </span>
+                    </div>
+                </a>
+                {% if post.visibilite == "prive" %}
+                    <span class="badge badge-neutre">{{ icon("lock", 11) }} Privé</span>
+                {% endif %}
+            </div>
+
+            {% if post.contenu_texte %}
+                <p style="margin-top:10px;">{{ post.contenu_texte }}</p>
+            {% endif %}
+
+            {% if post.fichier_media %}
+                {% if post.type_media == "video" %}
+                    <video class="media" controls>
+                        <source src="{{ url_for('static', filename='uploads/' + post.fichier_media) }}">
+                    </video>
+                {% else %}
+                    <img class="media" src="{{ url_for('static', filename='uploads/' + post.fichier_media) }}" alt="">
+                {% endif %}
+            {% elif post.image_url %}
+                <img class="media" src="{{ post.image_url }}" alt="">
+            {% endif %}
+
+            <form method="POST" action="{{ url_for('feed.like', post_id=post.id) }}" style="margin-top:10px;">
+                <button type="submit" class="bouton bouton-secondaire" style="{% if post.deja_like %}color:#C0392B; border-color:#F3C9C4;{% endif %}">
+                    {{ icon("heart-filled" if post.deja_like else "heart", 16) }}
+                    {{ post.nombre_likes }}
+                </button>
+            </form>
+        </article>
+    {% endfor %}
+{% endblock %}
