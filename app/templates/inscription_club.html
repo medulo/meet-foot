@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block titre %}Créer un Compte Club — Meet Foot{% endblock %}
+{% block contenu %}
+<div class="page-centree">
+    <div class="carte carte-auth">
+        <a href="{{ url_for('auth.index') }}" class="bouton bouton-texte mb-0" style="padding-left:0;">{{ icon("arrow-left", 16) }} Retour</a>
+        <h1 class="mt-lg">Compte Club</h1>
+        <p class="texte-attenue">Renseigne les informations de ton club pour créer son compte.</p>
+
+        {% if erreur %}
+            <div class="alerte alerte-danger">{{ icon("alert-circle") }}<span>{{ erreur }}</span></div>
+        {% endif %}
+
+        <form method="POST">
+            <div class="champ">
+                <label>Nom du Club</label>
+                <input type="text" name="nom_club" required>
+            </div>
+            <div class="champ">
+                <label>Logo (lien URL de l'image)</label>
+                <input type="text" name="logo_url" placeholder="https://...">
+            </div>
+            <div class="champ">
+                <label>Discipline</label>
+                <select name="discipline" required>
+                    <option value="Football">Football</option>
+                    <option value="Handball">Handball</option>
+                    <option value="Basketball">Basketball</option>
+                </select>
+            </div>
+            <div class="champ">
+                <label>Pays</label>
+                <input type="text" name="pays" required>
+            </div>
+            <div class="champ">
+                <label>Ligue</label>
+                <input type="text" name="ligue" placeholder="Ex : Ligue 1">
+            </div>
+            <div class="champ">
+                <label>Email</label>
+                <input type="email" name="email" required>
+            </div>
+            <div class="champ">
+                <label>Mot de passe</label>
+                <input type="password" name="mot_de_passe" required minlength="4">
+            </div>
+            <button type="submit" class="bouton bouton-primaire bouton-bloc">Créer mon compte</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
