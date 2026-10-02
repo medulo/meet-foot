@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block titre %}Meet Foot — Le réseau social du football, du handball et du basketball{% endblock %}
+{% block contenu %}
+<div class="page-centree">
+    <div class="carte carte-auth texte-centre">
+        <div class="marque-icone" style="width:52px; height:52px; border-radius:14px; margin:0 auto 14px auto;">
+            {{ icon("shield-check", 28) }}
+        </div>
+        <h1>Meet Foot</h1>
+        <p class="texte-attenue">Le réseau social des clubs, joueurs, agents et coachs de football, handball et basketball.</p>
+
+        <div class="choix-type-compte">
+            <a href="{{ url_for('auth.inscription_club') }}">
+                {{ icon("users", 26) }}
+                Compte Club
+            </a>
+            <a href="{{ url_for('auth.inscription_particulier') }}">
+                {{ icon("user", 26) }}
+                Compte particulier
+            </a>
+        </div>
+
+        <a href="{{ url_for('auth.login') }}" class="bouton bouton-texte">J'ai déjà un compte, me connecter</a>
+    </div>
+</div>
+{% endblock %}
