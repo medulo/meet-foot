@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block titre %}Mon profil — Meet Foot{% endblock %}
+{% block contenu %}
+    <div class="carte texte-centre">
+        {% if type_compte == "club" %}
+            {% if compte.logo_url %}
+                <img src="{{ compte.logo_url }}" class="avatar-grand" style="margin:0 auto 10px auto;" alt="">
+            {% else %}
+                <div class="avatar avatar-grand" style="margin:0 auto 10px auto;">{{ compte.nom_club[0]|upper }}</div>
+            {% endif %}
+            <h1 class="mb-0">{{ compte.nom_club }}</h1>
+            <p class="texte-attenue">{{ compte.discipline }} · {{ compte.pays }}{% if compte.ligue %} · {{ compte.ligue }}{% endif %}</p>
+        {% else %}
+            <div class="avatar avatar-grand" style="margin:0 auto 10px auto;">{{ compte.prenoms[0]|upper }}</div>
+            <h1 class="mb-0">{{ compte.prenoms }} {{ compte.nom }}</h1>
+            <p class="texte-attenue">
+                {{ compte.profession }} · {{ compte.sport }}{% if compte.poste %} · {{ compte.poste }}{% endif %}
+            </p>
+            <p class="texte-petit texte-attenue">{{ compte.nationalite }}</p>
+        {% endif %}
+
+        {% if compte.abonnement_actif %}
+            <span class="badge badge-succes">{{ icon("check-circle", 12) }} Abonnement à jour</span>
+        {% endif %}
+
+        <a href="{{ url_for('profile.parametres') }}" class="bouton bouton-secondaire mt-lg">{{ icon("settings", 16) }} Paramètres</a>
+    </div>
+
+    <h2>Mes publications</h2>
+
+    {% if mes_posts|length == 0 %}
+        <div class="etat-vide">
+            {{ icon("image", 36) }}
+            <p>Tu n'as encore rien publié.</p>
+            <a href="{{ url_for('feed.creer') }}" class="bouton bouton-primaire">Créer une publication</a>
+        </div>
+    {% endif %}
+
+    {% for post in mes_posts %}
+        <div class="carte carte-compacte">
+            <div class="flex-entre">
+                <span class="badge {{ 'badge-succes' if post.visibilite == 'public' else 'badge-neutre' }}">
+                    {{ icon("globe" if post.visibilite == "public" else "lock", 11) }}
+                    {{ "Public" if post.visibilite == "public" else "Privé" }}
+                </span>
+                <span class="texte-petit texte-attenue">{{ post.date_publication }}</span>
+            </div>
+
+            {% if post.contenu_texte %}
+                <p style="margin-top:10px;">{{ post.contenu_texte }}</p>
+            {% endif %}
+
+            {% if post.fichier_media %}
+                {% if post.type_media == "video" %}
+                    <video class="media" controls><source src="{{ url_for('static', filename='uploads/' + post.fichier_media) }}"></video>
+                {% else %}
+                    <img class="media" src="{{ url_for('static', filename='uploads/' + post.fichier_media) }}" alt="">
+                {% endif %}
+            {% elif post.image_url %}
+                <img class="media" src="{{ post.image_url }}" alt="">
+            {% endif %}
+
+            <form method="POST" action="{{ url_for('profile.basculer_visibilite_post', post_id=post.id) }}" style="margin-top:10px;">
+                <button type="submit" class="bouton bouton-secondaire">
+                    {{ icon("lock" if post.visibilite == "public" else "globe", 14) }}
+                    {{ "Rendre privé" if post.visibilite == "public" else "Rendre public" }}
+                </button>
+            </form>
+        </div>
+    {% endfor %}
+{% endblock %}
