@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block titre %}Créer une publication — Meet Foot{% endblock %}
+{% block contenu %}
+    <h1>Créer une publication</h1>
+    <p class="texte-attenue">Partage une photo, une vidéo ou un simple texte.</p>
+
+    <form method="POST" enctype="multipart/form-data" class="carte">
+        <div class="champ">
+            <label>Texte</label>
+            <textarea name="contenu_texte" placeholder="Quoi de neuf ?"></textarea>
+        </div>
+
+        <div class="champ">
+            <label>Photo ou vidéo (facultatif)</label>
+            <input type="file" name="media" accept="image/*,video/*">
+            <span class="champ-aide">{{ icon("image", 13) }} {{ icon("video", 13) }} Formats image et vidéo acceptés.</span>
+        </div>
+
+        <div class="champ">
+            <label>Visibilité</label>
+            <div class="groupe-segmente">
+                <input type="radio" name="visibilite" id="vis-public" value="public" checked>
+                <label for="vis-public">{{ icon("globe", 14) }} Public</label>
+                <input type="radio" name="visibilite" id="vis-prive" value="prive">
+                <label for="vis-prive">{{ icon("lock", 14) }} Privé</label>
+            </div>
+            <span class="champ-aide">Un post privé n'apparaît que sur ton propre profil.</span>
+        </div>
+
+        <button type="submit" class="bouton bouton-primaire bouton-bloc">{{ icon("plus-circle", 16) }} Publier</button>
+    </form>
+{% endblock %}
