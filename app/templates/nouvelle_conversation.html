@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block titre %}Nouvelle conversation — Meet Foot{% endblock %}
+{% block contenu %}
+    <a href="{{ url_for('messaging.messagerie') }}" class="bouton bouton-texte mb-0" style="padding-left:0;">{{ icon("arrow-left", 16) }} Retour</a>
+    <h1 class="mt-lg">Nouvelle conversation</h1>
+
+    {% if contacts|length == 0 %}
+        <div class="etat-vide">
+            {{ icon("search-x", 40) }}
+            <p>Aucun contact disponible pour le moment.</p>
+        </div>
+    {% endif %}
+
+    {% for contact in contacts %}
+        <a href="{{ url_for('messaging.conversation', autre_email=contact.email) }}" class="liste-item">
+            <div class="avatar">{{ contact.nom[0]|upper }}</div>
+            <div class="liste-item-corps">
+                <div class="liste-item-titre">{{ contact.nom }}</div>
+                <div class="liste-item-sous-titre">{{ "Club" if contact.type == "club" else "Particulier" }}</div>
+            </div>
+            {{ icon("chevron-right", 18) }}
+        </a>
+    {% endfor %}
+{% endblock %}
