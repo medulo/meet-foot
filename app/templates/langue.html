@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block titre %}Langue — Meet Foot{% endblock %}
+{% block contenu %}
+    <a href="{{ url_for('profile.parametres') }}" class="bouton bouton-texte mb-0" style="padding-left:0;">{{ icon("arrow-left", 16) }} Paramètres</a>
+    <h1 class="mt-lg">Langue de l'application</h1>
+
+    <form method="POST" class="carte">
+        <div class="champ">
+            <label>Choisis ta langue</label>
+            <select name="langue">
+                <option value="Français" {{ "selected" if langue_actuelle == "Français" }}>Français</option>
+                <option value="English" {{ "selected" if langue_actuelle == "English" }}>English</option>
+            </select>
+        </div>
+        <button type="submit" class="bouton bouton-primaire bouton-bloc">Enregistrer</button>
+    </form>
+
+    <div class="alerte alerte-info">
+        {{ icon("alert-circle") }}
+        <span>Pour l'instant, seul le choix est enregistré : la traduction complète de l'interface sera ajoutée dans une prochaine étape.</span>
+    </div>
+{% endblock %}
