@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block titre %}Publier sur le Market — Meet Foot{% endblock %}
+{% block contenu %}
+    <a href="{{ url_for('market.market') }}" class="bouton bouton-texte mb-0" style="padding-left:0;">{{ icon("arrow-left", 16) }} Retour</a>
+
+    {% if type_compte == "club" %}
+        <h1 class="mt-lg">Mettre un joueur sur le marché</h1>
+        <form method="POST" enctype="multipart/form-data" class="carte">
+            <div class="champ">
+                <label>Photo du joueur</label>
+                <input type="file" name="photo" accept="image/*">
+            </div>
+            <div class="champ">
+                <label>Nom du joueur</label>
+                <input type="text" name="nom_joueur" required>
+            </div>
+            <div class="champ">
+                <label>Poste occupé sur le terrain</label>
+                <input type="text" name="poste" placeholder="Ex : Attaquant" required>
+            </div>
+            <div class="champ">
+                <label>Âge</label>
+                <input type="number" name="age" min="14" max="50" required>
+            </div>
+            <div class="champ">
+                <label>Prix demandé (facultatif)</label>
+                <input type="text" name="prix" placeholder="Ex : 2 000 000 €">
+            </div>
+            <button type="submit" class="bouton bouton-primaire bouton-bloc">Publier sur le Market</button>
+        </form>
+
+    {% else %}
+        <h1 class="mt-lg">Se proposer sur le Market</h1>
+        <p class="texte-attenue">En tant qu'Agent ou Coach, mets ta photo en avant et précise ce que tu recherches.</p>
+        <form method="POST" enctype="multipart/form-data" class="carte">
+            <div class="champ">
+                <label>Ta photo</label>
+                <input type="file" name="photo" accept="image/*">
+            </div>
+            <div class="champ">
+                <label>Ce que tu recherches</label>
+                <input type="text" name="texte_recherche" placeholder="Ex : Recherche club de Ligue 2 pour la saison prochaine" required>
+            </div>
+            <button type="submit" class="bouton bouton-primaire bouton-bloc">Publier sur le Market</button>
+        </form>
+    {% endif %}
+{% endblock %}
