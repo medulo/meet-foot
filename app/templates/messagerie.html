@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block titre %}Messagerie — Meet Foot{% endblock %}
+{% block contenu %}
+    <div class="page-en-tete">
+        <h1 class="mb-0">Messagerie</h1>
+        <a href="{{ url_for('messaging.nouvelle_conversation') }}" class="bouton bouton-accent">{{ icon("plus-circle", 16) }} Nouveau</a>
+    </div>
+
+    {% if conversations|length == 0 %}
+        <div class="etat-vide">
+            {{ icon("message", 40) }}
+            <p>Aucune conversation pour le moment.</p>
+            <a href="{{ url_for('messaging.nouvelle_conversation') }}" class="bouton bouton-primaire">Démarrer une conversation</a>
+        </div>
+    {% endif %}
+
+    {% for conv in conversations %}
+        <a href="{{ url_for('messaging.conversation', autre_email=conv.email) }}" class="liste-item">
+            <div class="avatar">{{ conv.nom[0]|upper }}</div>
+            <div class="liste-item-corps">
+                <div class="liste-item-titre-ligne">
+                    <span class="liste-item-titre">{{ conv.nom }}</span>
+                    <span class="liste-item-date">{{ conv.date }}</span>
+                </div>
+                <div class="liste-item-sous-titre">{{ conv.dernier_message }}</div>
+            </div>
+        </a>
+    {% endfor %}
+{% endblock %}
