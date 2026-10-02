@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block titre %}Notifications — Meet Foot{% endblock %}
+{% block contenu %}
+    <h1>Notifications</h1>
+
+    {% if notifications|length == 0 %}
+        <div class="etat-vide">
+            {{ icon("bell", 40) }}
+            <p>Aucune notification pour le moment.</p>
+        </div>
+    {% endif %}
+
+    {% for notif in notifications %}
+        <a href="{{ notif.lien }}" class="liste-item {{ 'liste-item-non-lu' if not notif.lue }}">
+            <div class="avatar avatar-petit" style="background:{{ '#E8590C' if notif.type_notification == 'like' else '#14532D' }};">
+                {{ icon("heart-filled" if notif.type_notification == "like" else "message", 15) }}
+            </div>
+            <div class="liste-item-corps">
+                <div class="liste-item-titre">{{ notif.texte }}</div>
+                <div class="liste-item-date">{{ notif.date_notification }}</div>
+            </div>
+        </a>
+    {% endfor %}
+{% endblock %}
