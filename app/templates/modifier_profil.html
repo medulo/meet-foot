@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block titre %}Modifier mes infos — Meet Foot{% endblock %}
+{% block contenu %}
+    <a href="{{ url_for('profile.parametres') }}" class="bouton bouton-texte mb-0" style="padding-left:0;">{{ icon("arrow-left", 16) }} Paramètres</a>
+    <h1 class="mt-lg">Modifier mes infos</h1>
+
+    {% if type_compte == "club" %}
+        <form method="POST" class="carte">
+            <div class="champ">
+                <label>Nom du Club</label>
+                <input type="text" name="nom_club" value="{{ compte.nom_club }}" required>
+            </div>
+            <div class="champ">
+                <label>Logo (lien URL)</label>
+                <input type="text" name="logo_url" value="{{ compte.logo_url or '' }}">
+            </div>
+            <div class="champ">
+                <label>Pays</label>
+                <input type="text" name="pays" value="{{ compte.pays }}" required>
+            </div>
+            <div class="champ">
+                <label>Ligue</label>
+                <input type="text" name="ligue" value="{{ compte.ligue or '' }}">
+            </div>
+            <button type="submit" class="bouton bouton-primaire bouton-bloc">Enregistrer</button>
+        </form>
+    {% else %}
+        <form method="POST" class="carte">
+            <div class="champ">
+                <label>Nom</label>
+                <input type="text" name="nom" value="{{ compte.nom }}" required>
+            </div>
+            <div class="champ">
+                <label>Prénoms</label>
+                <input type="text" name="prenoms" value="{{ compte.prenoms }}" required>
+            </div>
+            <div class="champ">
+                <label>Nationalité</label>
+                <input type="text" name="nationalite" value="{{ compte.nationalite }}" required>
+            </div>
+            {% if compte.profession == "Joueur" %}
+                <div class="champ">
+                    <label>Poste sur le terrain</label>
+                    <input type="text" name="poste" value="{{ compte.poste or '' }}">
+                </div>
+            {% endif %}
+            <button type="submit" class="bouton bouton-primaire bouton-bloc">Enregistrer</button>
+        </form>
+    {% endif %}
+{% endblock %}
