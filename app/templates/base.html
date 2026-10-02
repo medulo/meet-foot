@@ -1,0 +1,60 @@
+{% from "_icons.html" import icon %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block titre %}Meet Foot{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    {% if session.get("email") and abonnement_ok %}
+    <header class="barre-haute">
+        <a href="{{ url_for('feed.accueil') }}" class="marque">
+            <span class="marque-icone">{{ icon("shield-check", 19) }}</span>
+            Meet Foot
+        </a>
+        <div class="barre-haute-actions">
+            <a href="{{ url_for('feed.notifications') }}" class="bouton bouton-icone" style="position:relative;">
+                {{ icon("bell") }}
+                {% if nb_notifs_non_lues > 0 %}
+                    <span class="pastille" style="top:-4px; right:-4px;">{{ nb_notifs_non_lues }}</span>
+                {% endif %}
+            </a>
+        </div>
+    </header>
+    {% endif %}
+
+    <main class="page">
+        {% block contenu %}{% endblock %}
+    </main>
+
+    {% if session.get("email") and abonnement_ok %}
+    <nav class="barre-basse">
+        <a href="{{ url_for('feed.accueil') }}" class="{{ 'actif' if request.endpoint == 'feed.accueil' }}">
+            {{ icon("home") }}<span>Accueil</span>
+        </a>
+        <a href="{{ url_for('feed.notifications') }}" class="{{ 'actif' if request.endpoint == 'feed.notifications' }}" style="position:relative;">
+            {{ icon("bell") }}<span>Notif.</span>
+            {% if nb_notifs_non_lues > 0 %}<span class="pastille">{{ nb_notifs_non_lues }}</span>{% endif %}
+        </a>
+        <a href="{{ url_for('feed.creer') }}" class="{{ 'actif' if request.endpoint == 'feed.creer' }}">
+            {{ icon("plus-circle") }}<span>Créer</span>
+        </a>
+        <a href="{{ url_for('messaging.messagerie') }}" class="{{ 'actif' if request.endpoint and request.endpoint.startswith('messaging.') }}">
+            {{ icon("message") }}<span>Messages</span>
+        </a>
+        <a href="{{ url_for('market.market') }}" class="{{ 'actif' if request.endpoint and request.endpoint.startswith('market.') }}">
+            {{ icon("shopping-bag") }}<span>Market</span>
+        </a>
+        <a href="{{ url_for('profile.profil') }}" class="{{ 'actif' if request.endpoint and request.endpoint.startswith('profile.') }}">
+            {{ icon("user") }}<span>Profil</span>
+        </a>
+    </nav>
+    {% endif %}
+
+    <script src="{{ url_for('static', filename='js/messagerie.js') }}"></script>
+    {% block script %}{% endblock %}
+</body>
+</html>
