@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block titre %}{{ compte.nom_club if type_compte == "club" else compte.prenoms + " " + compte.nom }} — Meet Foot{% endblock %}
+{% block contenu %}
+    <div class="carte texte-centre">
+        {% if type_compte == "club" %}
+            {% if compte.logo_url %}
+                <img src="{{ compte.logo_url }}" class="avatar-grand" style="margin:0 auto 10px auto;" alt="">
+            {% else %}
+                <div class="avatar avatar-grand" style="margin:0 auto 10px auto;">{{ compte.nom_club[0]|upper }}</div>
+            {% endif %}
+            <h1 class="mb-0">{{ compte.nom_club }}</h1>
+            <p class="texte-attenue">{{ compte.discipline }} · {{ compte.pays }}{% if compte.ligue %} · {{ compte.ligue }}{% endif %}</p>
+        {% else %}
+            <div class="avatar avatar-grand" style="margin:0 auto 10px auto;">{{ compte.prenoms[0]|upper }}</div>
+            <h1 class="mb-0">{{ compte.prenoms }} {{ compte.nom }}</h1>
+            <p class="texte-attenue">
+                {{ compte.profession }} · {{ compte.sport }}{% if compte.poste %} · {{ compte.poste }}{% endif %}
+            </p>
+            <p class="texte-petit texte-attenue">{{ compte.nationalite }}</p>
+        {% endif %}
+
+        <a href="{{ url_for('messaging.conversation', autre_email=email_visite) }}" class="bouton bouton-primaire mt-lg">
+            {{ icon("message", 16) }} Envoyer un message
+        </a>
+    </div>
+
+    <h2>Publications</h2>
+
+    {% if posts|length == 0 %}
+        <div class="etat-vide">
+            {{ icon("image", 36) }}
+            <p>Aucune publication publique pour le moment.</p>
+        </div>
+    {% endif %}
+
+    {% for post in posts %}
+        <div class="carte carte-compacte">
+            <span class="texte-petit texte-attenue">{{ post.date_publication }}</span>
+            {% if post.contenu_texte %}
+                <p style="margin-top:8px;">{{ post.contenu_texte }}</p>
+            {% endif %}
+            {% if post.fichier_media %}
+                {% if post.type_media == "video" %}
+                    <video class="media" controls><source src="{{ url_for('static', filename='uploads/' + post.fichier_media) }}"></video>
+                {% else %}
+                    <img class="media" src="{{ url_for('static', filename='uploads/' + post.fichier_media) }}" alt="">
+                {% endif %}
+            {% elif post.image_url %}
+                <img class="media" src="{{ post.image_url }}" alt="">
+            {% endif %}
+        </div>
+    {% endfor %}
+{% endblock %}
