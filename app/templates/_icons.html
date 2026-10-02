@@ -1,0 +1,71 @@
+{# =====================================================================
+   _icons.html
+   -----------
+   Bibliothèque d'icônes SVG réutilisables dans toute l'application, à la
+   place des émojis. Utilisation dans un autre template :
+
+       {% from "_icons.html" import icon %}
+       {{ icon("home") }}
+
+   Chaque icône est un petit dessin vectoriel (SVG) en "traits" (stroke),
+   dans le style d'une interface professionnelle sobre.
+   ===================================================================== #}
+{% macro icon(nom, taille=20) -%}
+<svg width="{{ taille }}" height="{{ taille }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+{%- if nom == "home" %}
+  <path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-9"/><path d="M9.5 20v-6h5v6"/>
+{%- elif nom == "bell" %}
+  <path d="M6 9a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6"/><path d="M10 20a2 2 0 0 0 4 0"/>
+{%- elif nom == "plus-circle" %}
+  <circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/>
+{%- elif nom == "message" %}
+  <path d="M21 11.5a8.4 8.4 0 0 1-8.9 8.4A9 9 0 0 1 8 19l-4.5 1L4.6 15.6A8.4 8.4 0 1 1 21 11.5Z"/>
+{%- elif nom == "shopping-bag" %}
+  <path d="M6 8h12l-1 12H7L6 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/>
+{%- elif nom == "user" %}
+  <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.5-6 8-6s8 2 8 6"/>
+{%- elif nom == "users" %}
+  <circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-5.2 6-5.2s6 1.9 6 5.2"/><path d="M15.5 6.2a3.2 3.2 0 0 1 0 6.2"/><path d="M17 14.9c2.4.5 4 2.1 4 5.1"/>
+{%- elif nom == "settings" %}
+  <circle cx="12" cy="12" r="3"/><path d="M19.4 13.5a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.9 2.9l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6V20a2 2 0 1 1-4 0v-.2a1.7 1.7 0 0 0-1.1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.9-2.9l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.6-1H4a2 2 0 1 1 0-4h.2a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.9-2.9l.1.1a1.7 1.7 0 0 0 1.9.3H10.5a1.7 1.7 0 0 0 1-1.6V4a2 2 0 1 1 4 0v.2a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.9 2.9l-.1.1a1.7 1.7 0 0 0-.3 1.9V10.5a1.7 1.7 0 0 0 1.6 1H20a2 2 0 1 1 0 4h-.2a1.7 1.7 0 0 0-1.6 1Z"/>
+{%- elif nom == "log-out" %}
+  <path d="M9 20H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/>
+{%- elif nom == "globe" %}
+  <circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 3.5 5.8 3.5 9s-1 6.5-3.5 9c-2.5-2.5-3.5-5.8-3.5-9s1-6.5 3.5-9Z"/>
+{%- elif nom == "lock" %}
+  <rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>
+{%- elif nom == "unlock" %}
+  <rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 7-2.6"/>
+{%- elif nom == "heart" %}
+  <path d="M12 20s-7.5-4.6-9.5-9.2C1.2 7.8 3 5 6.3 5c1.9 0 3.3 1 4.7 2.7C12.4 6 13.8 5 15.7 5c3.3 0 5.1 2.8 3.8 5.8C19.5 15.4 12 20 12 20Z"/>
+{%- elif nom == "heart-filled" %}
+  <path d="M12 20s-7.5-4.6-9.5-9.2C1.2 7.8 3 5 6.3 5c1.9 0 3.3 1 4.7 2.7C12.4 6 13.8 5 15.7 5c3.3 0 5.1 2.8 3.8 5.8C19.5 15.4 12 20 12 20Z" fill="currentColor"/>
+{%- elif nom == "mic" %}
+  <rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3M9 21h6"/>
+{%- elif nom == "send" %}
+  <path d="M21 3 11 13"/><path d="M21 3 14.5 21l-3.5-8-8-3.5L21 3Z"/>
+{%- elif nom == "arrow-left" %}
+  <path d="M19 12H5"/><path d="M11 18l-6-6 6-6"/>
+{%- elif nom == "chevron-right" %}
+  <path d="M9 6l6 6-6 6"/>
+{%- elif nom == "check-circle" %}
+  <circle cx="12" cy="12" r="9"/><path d="M8.5 12.3l2.4 2.4 4.6-5.4"/>
+{%- elif nom == "alert-circle" %}
+  <circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><circle cx="12" cy="16.3" r="0.15" fill="currentColor" stroke-width="2.6"/>
+{%- elif nom == "credit-card" %}
+  <rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10.5h18"/><path d="M7 15h4"/>
+{%- elif nom == "edit" %}
+  <path d="M4 20h4l10.5-10.5a2.1 2.1 0 0 0-3-3L5 17v3Z"/>
+{%- elif nom == "video" %}
+  <rect x="3" y="6.5" width="12" height="11" rx="2"/><path d="M20 8.5 15.5 12l4.5 3.5v-7Z"/>
+{%- elif nom == "image" %}
+  <rect x="3" y="4.5" width="18" height="15" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M21 16l-5.5-5-9.5 8"/>
+{%- elif nom == "shield-check" %}
+  <path d="M12 3l7 3v6c0 4.5-3 7.7-7 9-4-1.3-7-4.5-7-9V6l7-3Z"/><path d="M9 12l2.2 2.2L15.5 10"/>
+{%- elif nom == "search-x" %}
+  <circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-4.8-4.8"/><path d="M8.5 8.5l4 4M12.5 8.5l-4 4"/>
+{%- elif nom == "inbox" %}
+  <path d="M4 12h4l2 3h4l2-3h4"/><path d="M5.2 6h13.6L21 12v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-6L5.2 6Z"/>
+{%- endif %}
+</svg>
+{%- endmacro %}
