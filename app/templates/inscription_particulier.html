@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block titre %}Créer un Compte particulier — Meet Foot{% endblock %}
+{% block contenu %}
+<div class="page-centree">
+    <div class="carte carte-auth">
+        <a href="{{ url_for('auth.index') }}" class="bouton bouton-texte mb-0" style="padding-left:0;">{{ icon("arrow-left", 16) }} Retour</a>
+        <h1 class="mt-lg">Compte particulier</h1>
+        <p class="texte-attenue">Joueur, agent ou coach : crée ton profil personnel.</p>
+
+        {% if erreur %}
+            <div class="alerte alerte-danger">{{ icon("alert-circle") }}<span>{{ erreur }}</span></div>
+        {% endif %}
+
+        <form method="POST">
+            <div class="champ">
+                <label>Nom</label>
+                <input type="text" name="nom" required>
+            </div>
+            <div class="champ">
+                <label>Prénoms</label>
+                <input type="text" name="prenoms" required>
+            </div>
+            <div class="champ">
+                <label>Date de naissance</label>
+                <input type="date" name="date_naissance" required>
+            </div>
+            <div class="champ">
+                <label>Nationalité</label>
+                <input type="text" name="nationalite" required>
+            </div>
+            <div class="champ">
+                <label>Profession</label>
+                <select name="profession" required>
+                    <option value="Joueur">Joueur</option>
+                    <option value="Coach">Coach d'équipe</option>
+                    <option value="Agent">Agent de Joueur</option>
+                </select>
+            </div>
+            <div class="champ">
+                <label>Sport pratiqué</label>
+                <select name="sport" required>
+                    <option value="Football">Football</option>
+                    <option value="Handball">Handball</option>
+                    <option value="Basketball">Basketball</option>
+                </select>
+            </div>
+            <div class="champ">
+                <label>Poste sur le terrain</label>
+                <input type="text" name="poste" placeholder="Uniquement si tu es Joueur — ex : Attaquant">
+            </div>
+            <div class="champ">
+                <label>Email</label>
+                <input type="email" name="email" required>
+            </div>
+            <div class="champ">
+                <label>Mot de passe</label>
+                <input type="password" name="mot_de_passe" required minlength="4">
+            </div>
+            <button type="submit" class="bouton bouton-primaire bouton-bloc">Créer mon compte</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
